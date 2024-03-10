@@ -9,7 +9,7 @@ sheet = wb.worksheets[0]
 initialInvestment = sheet['B5':'D9']
 income = sheet['B16':'H25']
 expense = sheet['B32':'H41']
-otherInformation = sheet['C46':'D49']
+otherInformation = sheet['C46':'D50']
 
 
 balanceAmount = 0.0
@@ -23,16 +23,20 @@ print(balanceAmount)
 
 
 startYear = otherInformation[0][1].value
-endYear = otherInformation[1][1].value
-interestRateOnBalance = otherInformation[2][1].value/100.0 + 1
-taxRate = 1 - otherInformation[3][1].value/100.0
+startAge = otherInformation[1][1].value
+endAge = otherInformation[2][1].value
+interestRateOnBalance = otherInformation[3][1].value/100.0 + 1
+taxRate = 1 - otherInformation[4][1].value/100.0
 
 balance = []
 # balance.append([startYear, balance])
 # print(balance)
 
-for year in range(startYear, endYear + 1):
-	
+for index, age in enumerate(range(startAge, endAge + 1)):
+
+	year = startYear + index
+
+
 	balanceAmount = balanceAmount * interestRateOnBalance
 
 
@@ -113,7 +117,7 @@ for year in range(startYear, endYear + 1):
 		balanceAmount = balanceAmount - yearlyNet
 
 
-	balance.append([year, balanceAmount, yearlyIncome, yearlyExpense])
+	balance.append([age, year, balanceAmount, yearlyIncome, yearlyExpense])
 
 
 for row in balance:
