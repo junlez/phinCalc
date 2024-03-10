@@ -2,7 +2,7 @@
 from openpyxl import load_workbook
 
 
-excelFile = '../phinCalc_excel/finCalc_junle.xlsx'
+excelFile = 'phinCalc.xlsx'
 
 
 wb = load_workbook(excelFile)
