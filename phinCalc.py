@@ -2,7 +2,10 @@
 from openpyxl import load_workbook
 
 
-wb = load_workbook('../phinCalc_excel/finCalc_junle.xlsx')
+excelFile = '../phinCalc_excel/finCalc_junle.xlsx'
+
+
+wb = load_workbook(excelFile)
 sheet = wb.worksheets[0]
 
 
@@ -103,23 +106,29 @@ for index, age in enumerate(range(startAge, endAge + 1)):
 			continue
 
 		if year >= expenseStartYear and year <= expenseEndYear:
-			# print(yearlyExpense)
-			# print(expenseAmount)
 			yearlyExpense = yearlyExpense + expenseAmount
 
 
 	yearlyNet = yearlyIncome - yearlyExpense
 	
-	if yearlyNet >= 0:
-		balanceAmount = balanceAmount + yearlyNet
-	else:
-		yearlyNet = abs(yearlyNet) / taxRate
-		balanceAmount = balanceAmount - yearlyNet
+	if yearlyNet < 0:
+		yearlyNet = yearlyNet / taxRate
+	
+	balanceAmount = balanceAmount + yearlyNet
 
 
-	balance.append([age, year, balanceAmount, yearlyIncome, yearlyExpense])
+	balance.append([age, year, balanceAmount, yearlyNet])
 
 
-for row in balance:
+for rowIndex, row in enumerate(balance):
+	for columnIndex, column in enumerate(row):
+		sheet.cell(row = 56 + rowIndex, column = 4 + columnIndex).value = column
 	print(row)
+
+
+wb.save(excelFile)
+
+
+
+
 
